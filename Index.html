@@ -29,6 +29,7 @@
             background-color: transparent;
             padding: 10px 20px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
             z-index: 1000;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
@@ -74,13 +75,11 @@
             display: none;
             flex-direction: column;
             cursor: pointer;
-            margin-left: auto; /* Align hamburger to the far right */
         }
         .hamburger div {
             width: 25px;
             height: 3px;
-            /* Apply gradient to hamburger bars */
-            background-image: linear-gradient(to right, #f8c1a1, #f6d1cb);
+            background-color: #000;
             margin: 4px;
             transition: all 0.3s ease;
         }
@@ -323,12 +322,6 @@
             nav {
                 padding: 10px 15px;
             }
-            .nav-right {
-                display: none; /* Hide nav-right on mobile */
-            }
-            .hamburger {
-                display: flex; /* Show hamburger on mobile */
-            }
             .nav-right ul {
                 flex-direction: column;
                 position: fixed;
@@ -346,6 +339,9 @@
             }
             .nav-right ul li {
                 margin: 15px 0;
+            }
+            .hamburger {
+                display: flex;
             }
             .hero-content h1 {
                 font-size: 2.5rem;
@@ -387,17 +383,17 @@
                 <img src="logo.png" alt="Edith Kimani Logo">
             </a>
         </div>
+        <div class="hamburger" id="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
         <div class="nav-right">
             <ul id="nav-menu">
                 <li><a href="#about">About</a></li>
                 <li><a href="#watch">Watch</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-        </div>
-        <div class="hamburger" id="hamburger">
-            <div></div>
-            <div></div>
-            <div></div>
         </div>
     </nav>
 
