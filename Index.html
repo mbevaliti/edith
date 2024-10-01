@@ -51,6 +51,7 @@
         .nav-right {
             display: flex;
             align-items: center;
+            margin-left: auto;
         }
         .nav-right ul {
             list-style: none;
@@ -85,21 +86,31 @@
             transition: all 0.3s ease;
         }
         /* Mobile Menu */
-        .nav-right.mobile {
+        .nav-menu {
             display: none;
-            position: absolute;
+            position: fixed;
             top: 70px;
             right: 0;
             background-color: rgba(255, 255, 255, 0.95);
             width: 100%;
             flex-direction: column;
             align-items: center;
+            z-index: 999;
         }
-        .nav-right.mobile ul {
-            flex-direction: column;
+        .nav-menu ul {
+            list-style: none;
+            padding: 0;
         }
-        .nav-right.mobile ul li {
+        .nav-menu ul li {
             margin: 15px 0;
+        }
+        .nav-menu ul li a {
+            text-decoration: none;
+            color: #000;
+            font-size: 1.2rem;
+        }
+        .nav-menu.show {
+            display: flex;
         }
         /* Section Styles */
         section {
@@ -329,24 +340,6 @@
             .hamburger {
                 display: flex; /* Show hamburger on mobile */
             }
-            .nav-right ul {
-                flex-direction: column;
-                position: fixed;
-                top: 70px;
-                right: -100%;
-                width: 200px;
-                background-color: rgba(255, 255, 255, 0.95);
-                height: 100vh;
-                align-items: flex-start;
-                padding-top: 20px;
-                transition: right 0.3s ease;
-            }
-            .nav-right ul.show {
-                right: 0;
-            }
-            .nav-right ul li {
-                margin: 15px 0;
-            }
             .hero-content h1 {
                 font-size: 2.5rem;
             }
@@ -388,7 +381,7 @@
             </a>
         </div>
         <div class="nav-right">
-            <ul id="nav-menu">
+            <ul>
                 <li><a href="#about">About</a></li>
                 <li><a href="#watch">Watch</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -400,6 +393,15 @@
             <div></div>
         </div>
     </nav>
+
+    <!-- Mobile Navigation Menu -->
+    <div class="nav-menu" id="nav-menu">
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#watch">Watch</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
@@ -429,10 +431,9 @@
     <!-- Watch Section -->
     <section class="watch-section" id="watch">
         <div class="section-content">
-            
+            <img src="you.png" alt="Recent Work by Edith Kimani" class="watch-image">
             <div class="text-content">
                 <h2>Watch</h2>
-                <img src="you.png" alt="Recent Work by Edith Kimani" class="watch-image">
                 <p>Explore recent works and interviews featuring Edith Kimani, highlighting her impactful journalism.</p>
             </div>
         </div>
@@ -492,50 +493,3 @@
                 } else {
                     nav.classList.remove('scrolled');
                     logo.style.height = '80px'; // Original logo size
-                }
-            });
-        }
-
-        // Function to animate sections on scroll
-        function animateSectionsOnScroll() {
-            const sections = document.querySelectorAll('section');
-
-            const observerOptions = {
-                threshold: 0.1
-            };
-
-            const sectionObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            sections.forEach(section => {
-                if (!section.classList.contains('hero')) { // Exclude hero section
-                    sectionObserver.observe(section);
-                }
-            });
-        }
-
-        // Function for mobile navigation toggle
-        function mobileNavToggle() {
-            const hamburger = document.getElementById('hamburger');
-            const navMenu = document.getElementById('nav-menu');
-
-            hamburger.addEventListener('click', () => {
-                navMenu.classList.toggle('show');
-            });
-        }
-
-        // Initialize functions on DOM content loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            handleNavbarBackground();
-            animateSectionsOnScroll();
-            mobileNavToggle();
-        });
-    </script>
-</body>
-</html>
