@@ -31,7 +31,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 100;
+            z-index: 1000;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
         /* Scrolled Navbar */
@@ -47,6 +47,11 @@
             height: 80px;
             width: auto;
             transition: height 0.3s ease;
+        }
+        /* Navigation Links */
+        .nav-right {
+            display: flex;
+            align-items: center;
         }
         .nav-right ul {
             list-style: none;
@@ -64,6 +69,36 @@
         }
         .nav-right ul li a:hover {
             color: #ff6347;
+        }
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #000;
+            margin: 4px;
+            transition: all 0.3s ease;
+        }
+        /* Mobile Menu */
+        .nav-right.mobile {
+            display: none;
+            position: absolute;
+            top: 70px;
+            right: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+        }
+        .nav-right.mobile ul {
+            flex-direction: column;
+        }
+        .nav-right.mobile ul li {
+            margin: 15px 0;
         }
         /* Section Styles */
         section {
@@ -88,10 +123,12 @@
         .hero-content {
             max-width: 800px;
             margin: 0 auto;
+            padding-top: 100px;
         }
 
         .hero-image {
-            width: 300px;
+            width: 40%;
+            max-width: 300px;
             height: auto;
             border-radius: 50%;
             margin-bottom: 20px;
@@ -127,6 +164,7 @@
             display: flex;
             gap: 20px;
             justify-content: center;
+            flex-wrap: wrap;
             animation: fadeInUp 1s forwards;
             animation-delay: 1s;
             opacity: 0;
@@ -163,24 +201,6 @@
             }
         }
 
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-            .hero-image {
-                width: 200px;
-            }
-            .section-content {
-                flex-direction: column;
-            }
-            .section-content img,
-            .section-content .text-content {
-                max-width: 100%;
-                margin: 0;
-            }
-        }
-
         /* Shared Styles for Sections */
         .section-content {
             display: flex;
@@ -189,14 +209,18 @@
             max-width: 1000px;
             margin: 0 auto;
             gap: 40px;
+            flex-wrap: wrap;
         }
         .section-content img {
+            width: 100%;
             max-width: 400px;
             height: auto;
             border-radius: 10px;
+            flex: 1;
         }
         .section-content .text-content {
             flex: 1;
+            min-width: 280px;
         }
         .section-content .text-content h2 {
             font-size: 2.5rem;
@@ -251,9 +275,10 @@
             display: flex;
             justify-content: center;
             margin-top: 40px;
+            flex-wrap: wrap;
         }
         .contact-section .social-media a {
-            margin: 0 15px;
+            margin: 10px 15px;
             display: inline-block;
             transition: transform 0.3s ease;
         }
@@ -270,6 +295,7 @@
             color: #fff;
             padding: 20px;
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
         }
@@ -290,6 +316,62 @@
         .footer-center p {
             color: #fff;
         }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            nav {
+                padding: 10px 15px;
+            }
+            .nav-right ul {
+                flex-direction: column;
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 200px;
+                background-color: rgba(255, 255, 255, 0.95);
+                height: 100vh;
+                align-items: flex-start;
+                padding-top: 20px;
+                transition: right 0.3s ease;
+            }
+            .nav-right ul.show {
+                right: 0;
+            }
+            .nav-right ul li {
+                margin: 15px 0;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .hero-image {
+                width: 60%;
+                max-width: 250px;
+            }
+            .section-content {
+                flex-direction: column;
+            }
+            .section-content img,
+            .section-content .text-content {
+                max-width: 100%;
+                margin: 0;
+            }
+            .hero-buttons {
+                flex-direction: column;
+            }
+            .hero-buttons a {
+                margin-bottom: 10px;
+            }
+            footer {
+                flex-direction: column;
+                align-items: center;
+            }
+            .footer-left {
+                margin: 10px 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -301,8 +383,13 @@
                 <img src="logo.png" alt="Edith Kimani Logo">
             </a>
         </div>
+        <div class="hamburger" id="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
         <div class="nav-right">
-            <ul>
+            <ul id="nav-menu">
                 <li><a href="#about">About</a></li>
                 <li><a href="#watch">Watch</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -428,10 +515,21 @@
             });
         }
 
+        // Function for mobile navigation toggle
+        function mobileNavToggle() {
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('nav-menu');
+
+            hamburger.addEventListener('click', () => {
+                navMenu.classList.toggle('show');
+            });
+        }
+
         // Initialize functions on DOM content loaded
         document.addEventListener('DOMContentLoaded', () => {
             handleNavbarBackground();
             animateSectionsOnScroll();
+            mobileNavToggle();
         });
     </script>
 </body>
